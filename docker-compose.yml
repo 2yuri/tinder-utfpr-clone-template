@@ -1,0 +1,34 @@
+version: "3"
+services:
+  psql:
+    hostname: "primary"
+    image: postgis/postgis:latest
+    container_name: tinder-db-template
+    user: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+    environment:
+      - MAX_CONNECTIONS=10
+      - MAX_WAL_SENDERS=5
+      - POSTGRES_MODE=primary
+      - POSTGRES_PRIMARY_USER=tinder
+      - POSTGRES_PRIMARY_PASSWORD=123
+      - POSTGRES_DB=tinder
+      - POSTGRES_USER=tinder
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_ROOT_PASSWORD=123
+      - POSTGRES_PRIMARY_PORT=5432
+    ports:
+      - "15432:5432"
+    volumes:
+      - db:/var/lib/psql/data
+    networks:
+      - tinder
+volumes:
+  db:
+networks:
+  tinder:
+    driver: bridge
