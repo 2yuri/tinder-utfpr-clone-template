@@ -67,4 +67,6 @@ EXECUTE PROCEDURE trigger_set_timestamp();`)
 if err != nil {
 	log.Fatal("cannot run sql")
 }
+
+log.Println("migrations created!")
 }

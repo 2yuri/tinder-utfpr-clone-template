@@ -121,3 +121,36 @@ func ShowMatches(ctx context.Context, userId string) ([]*domain.User, error) {
 
 	return result, nil
 }
+
+func CreateInteraction(ctx context.Context, userId, targetId string, like bool) (bool, error) {
+	query := `INSERT INTO interactions (user_id, target_user_id, liked)
+	VALUES ((select id from users where external_id = $1), 
+			(select id from users where external_id = $2), $3)`
+	
+	_, err := db.Db.ExecContext(ctx, query, userId, targetId, like)
+	if err != nil {
+		return false, err
+	}
+
+	matchQuery := `SELECT liked FROM interactions 
+	WHERE user_id = (select id from users where external_id = $1) 
+	AND target_user_id = (select id from users where external_id = $2)`
+
+	var isMatch bool
+	_ = db.Db.QueryRowContext(ctx, matchQuery, targetId, userId).Scan(&isMatch)
+
+	return isMatch, nil
+}
+
+func CancelInteraction(ctx context.Context, userId, targetId string) error {
+	query := `UPDATE interactions SET liked = false
+	WHERE user_id = (select id from users where external_id = $1) 
+	AND target_user_id = (select id from users where external_id = $2)`
+
+	_, err := db.Db.ExecContext(ctx, query, userId, targetId)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
