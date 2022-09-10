@@ -29,5 +29,7 @@ func (s *Server) setupRoutes() {
 		interactions.GET("/", handlers.FindPeople)
 		interactions.GET("/liked", handlers.ShowLiked)
 		interactions.GET("/matches", handlers.ShowMatches)
+		interactions.POST("", handlers.CreateInteraction)
+		interactions.POST("/cancel", handlers.CancelInteraction)
 	}
 }

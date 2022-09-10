@@ -12,14 +12,14 @@ import (
 
 var stopCh chan error
 
-const TOKEN = "TOKEN AQUI"
+const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjI4OTE5OTcsImlhdCI6MTY2MjgwNTU5NywiaXNzIjoidGluZGVyLWlzc3VlciIsInN1YiI6IjMxMmNkYWU2LTMwM2YtMTFlZC05ZmY1LTAyNDJhYzE5MDAwMiJ9.EizIsIM3kVs3aVzj53PxLReyjXJM5L2uLFVSXaD-6Ho"
 
 func main() {
 	flag.Parse()
 	log.SetFlags(0)
 	stopCh = make(chan error)
 
-	u := url.URL{Scheme: "ws", Host: "localhost:51000", Path: "/api/v1/subscribe"}
+	u := url.URL{Scheme: "wss", Host: "api.yuri.engineer", Path: "/api/v1/subscribe"}
 	log.Printf("connecting to %s", u.String())
 
 	c, _, err := websocket.DefaultDialer.Dial(u.String(), http.Header{
