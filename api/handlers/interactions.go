@@ -2,8 +2,8 @@ package handlers
 
 import (
 	"context"
-	"log"
 	"net/http"
+	"tinderutf/api/websocket"
 	"tinderutf/db/repositories"
 	"tinderutf/internal/validate"
 
@@ -136,7 +136,15 @@ func Interact(c *gin.Context) {
 	}
 
 	if isMatch && req.Like {
-		log.Println("é um match")
+		websocket.Events <- websocket.WSEvent{
+			UserID: id,
+			Match: true,
+		}
+
+		websocket.Events <- websocket.WSEvent{
+			UserID: req.Target,
+			Match: true,
+		}
 	}
 
 	c.Status(200)

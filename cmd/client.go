@@ -12,7 +12,7 @@ import (
 
 var stopCh chan error
 
-const TOKEN = "TOKEN AQUI"
+const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjI5MDAzNDYsImlhdCI6MTY2MjgxMzk0NiwiaXNzIjoidGluZGVyLWlzc3VlciIsInN1YiI6ImRiZmIzZmQyLTMxMDUtMTFlZC05NTgwLTAyNDJhYzFkMDAwMiJ9.FB0WNcZ4vEzBnCYPQTUfWoePk-1eY95KGhSzz8r0TT8"
 
 func main() {
 	flag.Parse()

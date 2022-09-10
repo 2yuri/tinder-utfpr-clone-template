@@ -16,7 +16,6 @@ func Subscribe(hub *websocket.Hub) gin.HandlerFunc {
 			},
 		}
 
-
 		id := c.GetString("userId")
 		if id == "" {
 			c.AbortWithStatusJSON(500, createDefaultError("invalid userId"))
