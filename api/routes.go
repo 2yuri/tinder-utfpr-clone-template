@@ -3,6 +3,7 @@ package api
 import (
 	"tinderutf/api/handlers"
 	"tinderutf/api/middlewares"
+	"tinderutf/api/websocket"
 )
 
 func (s *Server) setupRoutes() {
@@ -32,4 +33,7 @@ func (s *Server) setupRoutes() {
 		interactions.POST("", handlers.Interact)
 		interactions.POST("/cancel", handlers.CancelInteraction)
 	}
+
+	hub := websocket.NewHub()
+	v1.GET("/subscribe", handlers.Subscribe(hub))
 }
